@@ -12,4 +12,41 @@
 <hr>
 <p>然后就是正题，如何让 coder 写并发程序的时候能够使用可见性和有序性的特性，同时在这里说一下为什么没有讨论内存模型带来的原子性问题，因为内存模型本来是有原子性的操作，那就是二进制中的各种字节码指令，大体分成八种 read/write load/store use/assgin lock/unlock 的指令，但是指令不面向编程的，我们没有办法直接使用指令编码，所以原子性的解决在内存模型中无法提供，但是可见性和有序性可以由内存模型的特征通过编码的方式解决的，coder 可以通过自己业务上的需求<strong>按需进行可见性或者有序性的编码，也即是按需禁用缓存或者按需禁用编译优化</strong></p>
 <p><strong><em>那么有哪些编码机制可以让coder 用呢？</em></strong><br>可见性的问题： 可以通过volatile 的语义， final or sychronized 关键字保证可见性，volatile 可以让工作内存中的变量刷新到主内存中去，也有人说是jvm 编译的时候直接跳过缓存，更新主内存一说，那我们先从内存模型中看一下java中支持的原子性和volatile 支持的哪些操作<br><img src="https://upload-images.jianshu.io/upload_images/13145731-6343a690b6c63a27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="java内存模型中支持的原子性指令"></p>
-</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/并发编程/">并发编程</a><a class="post-meta__tags" href="/tags/java/">java</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/23/并发编程一/"><i class="fa fa-chevron-left">  </i><span>并发编程领域的探索和实践之路</span></a></div><div class="next-post pull-right"><a href="/2019/06/23/计算机系统知识1/"><span>抛一些有助于形成计算机知识图谱的图</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
+</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/并发编程/">并发编程</a><a class="post-meta__tags" href="/tags/java/">java</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/23/并发编程一/"><i class="fa fa-chevron-left">  </i><span>并发编程领域的探索和实践之路</span></a></div><div class="next-post pull-right"><a href="/2019/06/23/计算机系统知识1/"><span>抛一些有助于形成计算机知识图谱的图</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
+<div id="container" style="display:none"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  const myTheme = {
+    render(state, instance) {
+      const container = document.createElement('div');
+      container.lang = "en-US";
+      container.className = 'gitment-container gitment-root-container';
+      container.appendChild(instance.renderHeader(state, instance));
+      container.appendChild(instance.renderEditor(state, instance));
+      container.appendChild(instance.renderComments(state, instance));
+      container.appendChild(instance.renderFooter(state, instance));
+      return container;
+    }
+  }
+
+  function showGitment() {
+    $("#gitment_title").attr("style", "display:none");
+    $("#container").attr("style", "").addClass("gitment_container");
+    var gitment = new Gitment({
+      id: decodeURI(window.location.pathname),
+      theme: myTheme,
+      owner: 'amory',
+      repo: 'amorynan.github.io',
+      oauth: {
+        client_id: '31355da006fcd9f2f1d2',
+        client_secret: 'c81b0a752be3648646e49dcb1278a13abb9d3b6f'
+      }
+    });
+    gitment.render('container');
+  }
+
+  showGitment();
+</script>
+</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>

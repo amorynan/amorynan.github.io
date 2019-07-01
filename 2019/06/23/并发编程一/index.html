@@ -12,4 +12,41 @@
 <p>ok， 那么什么时候需要立马有并发思考的必要呢？先从浅显的，并发肯定指的是得有多个worker 一起干活的意思对吧，对应到代码层面就是你的程序或多或少在某一个模块中出现了需要有多个线程去执行任务的地方，注意包括三方包，以前的我天真的认为自己代码中没有用到java util current package 里面的玩意儿应该就不需要考虑并发问题吧，唉真是天真，jdbc 难道没有连接池吗？不就有是有多个woker了吗？其实只要不是那种很 eazy 的单机程序，大部分都是会有多个woker 的，其次是有多个worker 还不足以说一定是会有并发的bug ，因为如果是架在单核上，只有一个cpu 对应了一个cpu 缓存，那也就变成了串行的方式，理解一个很基本的概念，线程worker 是至少一个任务组的操作步骤，真正能计算执行的只有cpu 能做到这个，软件的运行本质是硬件的支持，这个时候可以在脑袋里联想一下全景图的雏形了，如果还没有办法很好的构造一个这样的全景图的话，那就说明你的“真理”程度还不够好，建议找本操作系统的书看一下啥的，所以现在基本上是多核，可能是多cpu，也可能是一个cpu有多个计算晶体，抽象一点就是拥有多个真正计算能力的玩意儿，硬件工程师知道这玩意儿的计算速率和读写内存的速率不是一个等级啊，好优化一下，内存比较大，我就弄个小点但是高速的缓存平衡一下，注意此缓存和我们在软件领域中用到的缓存不是一个东东，此缓存是指高速缓冲存储器(cache)，而比如redis 的缓存原理是说把数据放到内存中去，比较的对象是关系型数据库中的把数据放入到硬盘中，详见<a href="https://blog.csdn.net/qq_34567703/article/details/76736564" target="_blank" rel="noopener">https://blog.csdn.net/qq_34567703/article/details/76736564</a><br>然而这样的缓存优化如果不加控制的话就会带来一个并发的bug，那就是可见性的问题，本来多个线程操作同一个数据，但是由于cpu的缓存导致数据一个数据本来改变了，但是放入缓存而不是内存中的，所以另外一个线程看不到前面一个线程的计算的结果，那前面的worker 不就白做了吗？<br><strong>所以以上是硬件资源角度上增加一个高速缓存的“物体”给cpu 虽然可以平衡一些cpu 和 读写内存的速度差异，但是却会带来可见性问题的隐式bug。。。</strong><br>除此之外，linux os kernel 通过分时复用cpu 的这项技术达到一个巅峰，这项技术可以让cpu在等待io 操作的时候，比如硬盘资源或者网络io资源的时候，不让他闲下来，让他干已经准备好的其他的进程的事情，完全可以达到cpu的高利用率，同时硬盘资源也能够很好的利用，这就是分时复用，分时复用能达到很好的效果其实就是时间片大小的设置，这就是linux os 的精妙算法的一部分，时间片很小的时候，对于人的感知就相当于是两件事情在同时做一样，但其实是一个单核在操作，但是，分时复用cpu 意味着线程切换，线程切换的好，诶，我(cpu)刚好在此线程io操作将要踏入等待，从执行队列中切换到到新的线程接着干，但是切换的不好，比如在我们看来原语count ++ 上cpu指令， count值从内存加载到寄存器 ， 1到寄存器 ， 执行count+1，要是从中间某个步骤停下，换另外一个线程接着干，并且还是针对同一个数据资源，那就有bug了，因为最终的值的确定就是最终哪个线程结束对这个资源的使用，也就是必然导致会有一个worker 干了没有用的事情，这就是线程切换带来的问题。<br><strong>所以上面是linux os kernel 为了优化cpu计算不间断执行问题而进行的分时复用的操作，但是如果多线程访问一个资源的操作不是原子性的，那么就会有bug的产生</strong><br>还有一个层面便是到了高级语言的部分，也就是编译器他也会做优化的，这部分做的优化是关于指令重排的优化，这项技术想解决一个高级语言编译成二进制文件的原语的优化，有些比如典型的双层检测静态初始化的方式，就会出现如果指令重排，那么很有可能拿到的instance 在某个时刻是空的，所以这也是出现并发bug的原因之一</p>
 <p>上面总结一下主要谈到了三个层次分别对于cpu 和 内存之间的优化，cpu 和 io 之间的优化，以及编译优化的技术又分别会对应带来的如果是多线程情况访问同一个资源可能带来的<strong><em>可见性，原子性，和有序性</em></strong>不满足带来的bug，而这三点又是并发编程需要达到的一个不出现意外bug 的源头。</p>
 <p>下一篇会是java 内存模型对于上面两点可见行和有序性问题的探讨。。。</p>
-</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/并发编程/">并发编程</a><a class="post-meta__tags" href="/tags/java/">java</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/24/一次redis 的批量导入操作/"><i class="fa fa-chevron-left">  </i><span>一次redis 的批量导入数据记录</span></a></div><div class="next-post pull-right"><a href="/2019/06/23/并发编程中/"><span>并发编程领域的探索和实践之路</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
+</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/并发编程/">并发编程</a><a class="post-meta__tags" href="/tags/java/">java</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/24/一次redis 的批量导入操作/"><i class="fa fa-chevron-left">  </i><span>一次redis 的批量导入数据记录</span></a></div><div class="next-post pull-right"><a href="/2019/06/23/并发编程中/"><span>并发编程领域的探索和实践之路</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
+<div id="container" style="display:none"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  const myTheme = {
+    render(state, instance) {
+      const container = document.createElement('div');
+      container.lang = "en-US";
+      container.className = 'gitment-container gitment-root-container';
+      container.appendChild(instance.renderHeader(state, instance));
+      container.appendChild(instance.renderEditor(state, instance));
+      container.appendChild(instance.renderComments(state, instance));
+      container.appendChild(instance.renderFooter(state, instance));
+      return container;
+    }
+  }
+
+  function showGitment() {
+    $("#gitment_title").attr("style", "display:none");
+    $("#container").attr("style", "").addClass("gitment_container");
+    var gitment = new Gitment({
+      id: decodeURI(window.location.pathname),
+      theme: myTheme,
+      owner: 'amory',
+      repo: 'amorynan.github.io',
+      oauth: {
+        client_id: '31355da006fcd9f2f1d2',
+        client_secret: 'c81b0a752be3648646e49dcb1278a13abb9d3b6f'
+      }
+    });
+    gitment.render('container');
+  }
+
+  showGitment();
+</script>
+</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>

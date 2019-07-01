@@ -20,4 +20,41 @@
 <li>列有效。RAS#高电平，CAS#低电平。意味着列地址有效，这时在A0-A13上传送的是列地址。没错，A0-A13是行列共用的，所以每个格子选择需要有1和2两步才能唯一确定。</li>
 <li>数据读出或写入。根据COMMAND进行读取或者写入。在选定好小方格后，就已经确定了具体的存储单元，剩下的事情就是数据通过数据I/O通道（DQ）输出到内存总线上了。<br>而且CAS发出之后，仍要经过一定的时间才能有数据输出，从CAS与读取命令发出到第一笔数据输出的这段时间，被定义为CL（CAS Latency，CAS时延）。由于CL只在读取时出现，所以CL又被称为读取时延（RL，Read Latency）<br>所以cpu和内存的交互为什么会说完全比不上cpu计算的时间就是这个原因</li>
 </ol>
-</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/计算机知识图谱/">计算机知识图谱</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/23/并发编程中/"><i class="fa fa-chevron-left">  </i><span>并发编程领域的探索和实践之路</span></a></div><div class="next-post pull-right"><a href="/2019/06/23/数组linkedlist实现/"><span>数组和链表+以及java 容器的实现</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
+</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/计算机知识图谱/">计算机知识图谱</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/23/并发编程中/"><i class="fa fa-chevron-left">  </i><span>并发编程领域的探索和实践之路</span></a></div><div class="next-post pull-right"><a href="/2019/06/23/数组linkedlist实现/"><span>数组和链表+以及java 容器的实现</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
+<div id="container" style="display:none"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  const myTheme = {
+    render(state, instance) {
+      const container = document.createElement('div');
+      container.lang = "en-US";
+      container.className = 'gitment-container gitment-root-container';
+      container.appendChild(instance.renderHeader(state, instance));
+      container.appendChild(instance.renderEditor(state, instance));
+      container.appendChild(instance.renderComments(state, instance));
+      container.appendChild(instance.renderFooter(state, instance));
+      return container;
+    }
+  }
+
+  function showGitment() {
+    $("#gitment_title").attr("style", "display:none");
+    $("#container").attr("style", "").addClass("gitment_container");
+    var gitment = new Gitment({
+      id: decodeURI(window.location.pathname),
+      theme: myTheme,
+      owner: 'amory',
+      repo: 'amorynan.github.io',
+      oauth: {
+        client_id: '31355da006fcd9f2f1d2',
+        client_secret: 'c81b0a752be3648646e49dcb1278a13abb9d3b6f'
+      }
+    });
+    gitment.render('container');
+  }
+
+  showGitment();
+</script>
+</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
