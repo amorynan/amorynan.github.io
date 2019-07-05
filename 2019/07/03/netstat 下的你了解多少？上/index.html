@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="zh"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>netstat 下查看你掌握多少网络知识?上 | WelCome to amory's world!</title><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css"><script>var GLOBAL = { 
+  root: '/',
+  algolia: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><link rel="icon" href="/favicon.ico"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#netstat-下查看你掌握多少网络知识-上"><span class="toc-number">1.</span> <span class="toc-text">netstat 下查看你掌握多少网络知识?上</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1561376322195&amp;di=968ecdc60b194dac7a024a8e75182703&amp;imgtype=0&amp;src=http%3A%2F%2Fgss0.baidu.com%2F94o3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F91529822720e0cf397cc85d40846f21fbe09aae2.jpg"></div><div class="author-info__name text-center">amory wang</div><div class="author-info__description text-center">hey ...</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">9</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">15</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">WelCome to amory's world!</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">netstat 下查看你掌握多少网络知识?上</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-07-03 </time></div></div></div><div class="layout" id="content-inner"><article id="post"><div id="post-content"><hr>
+<h2 id="netstat-下查看你掌握多少网络知识-上"><a href="#netstat-下查看你掌握多少网络知识-上" class="headerlink" title="netstat 下查看你掌握多少网络知识?上"></a>netstat 下查看你掌握多少网络知识?上</h2><pre><code>前言：工作中经常的场景有用netstat -anp | grep : port 这样的命令去查询java 项目的进程号，
+然后kill， nohup 进行重启，也经常用netstat -anp 查询当前linux 的网络状态，但是命令输入
+后的下面几列含义了解多少？</code></pre><p>不如我们在Linux 服务器上执行一下netstat -anp（这里我是本地ssh 了远程一个测试服进行连接的查看）</p>
+<pre><code>Proto Recv-Q Send-Q Local Address               Foreign Address             State       PID/Program name   
+tcp        0      0 0.0.0.0:5672                0.0.0.0:*                   LISTEN      31968/beam.smp      
+tcp        0      0 0.0.0.0:25672               0.0.0.0:*                   LISTEN      31968/beam.smp      
+tcp        0      0 0.0.0.0:3306                0.0.0.0:*                   LISTEN      2231/mysqld         
+tcp        0      0 127.0.0.1:6379              0.0.0.0:*                   LISTEN      27020/./redis-serve 
+tcp        0      0 0.0.0.0:80                  0.0.0.0:*                   LISTEN      26376/nginx         
+tcp        0      0 0.0.0.0:4369                0.0.0.0:*                   LISTEN      27315/epmd          
+tcp        0      0 0.0.0.0:22                  0.0.0.0:*                   LISTEN      1539/sshd           
+tcp        0      0 0.0.0.0:15672               0.0.0.0:*                   LISTEN      31968/beam.smp      
+tcp        0      0 0.0.0.0:8888                0.0.0.0:*                   LISTEN      16252/java          
+tcp        0      0 127.0.0.1:25                0.0.0.0:*                   LISTEN      1702/master         
+tcp        0      0 0.0.0.0:443                 0.0.0.0:*                   LISTEN      26376/nginx         
+tcp        0      0 172.16.166.212:53860        100.100.45.158:80           ESTABLISHED 4542/aliyun_assist_ 
+tcp        0     40 172.16.166.212:22           115.198.98.43:49606         ESTABLISHED 26768/sshd </code></pre><p>上面的几列含义其实列名已经初见端倪</p>
+<p>proto=》遵循的网络协议栈， tcp or udp （这两个协议，也被称作为协议栈，从linux 的视角分析其实不同服务包的采用不同处理调用链的方式） </p>
+<p>Recv-Q Send-Q: 有官方的解释=》 mean receiving queue and sending queue. These should always be zero; if they’re not you might have a problem.意思也就是接受和发送“队列”注意这里是指的两个服务器或者两个正在建立连接的计算机裸机服务之间的队列吗？当然不是，不然你把linux 或者其他的操作系统软件放在了哪里？ 正解是从一个服务器A的kernel 中发送队列中的字节包，通过网络大道发送到一个服务器B的kernel 接受队列的中，然后这个队列的状态值就是这两列所代表的含义，所以一般来说，正常的状况是一直保持着0 的状态，才代表kernel 没有“罢工”，或者此前的工作量是在kernel的负荷中呢</p>
+<p>由此可见：<br>Recv-Q：表示收到的数据已经在本地接收缓冲，但是还有多少没有被进程取走，recv()，可以简单判断程序收到包是否正常，0收到包，or 有比较大的值，代表程序还没有准备好收包，需要具体原因的分析</p>
+<p>Send-Q：对方没有收到的数据或者说没有Ack的,还是本地缓冲区.</p>
+<p>LocalArress Foreign Address =》</p>
+<p> Local address is either your IP and port number, or IP and the name of a service. </p>
+<p> “Foreign address” is the hostname and service you are connected to，相信大家的英文水平还是可以，我就不翻译了，但是解释是这样的，我们看一哈具体的场景值，却发现为啥是这个值？</p>
+<p>所以我们来具体分析几个：</p>
+<pre><code>tcp        0      0 0.0.0.0:3306                0.0.0.0:*                   LISTEN      2231/mysqld  </code></pre><p>首先protocal 是 tcp 的协议栈， 木有问题， rq：0， sq：0 没有问题，说明这个进程的程序运行很良好嘛（其实后面的proecss name 可以看到这就是mysql 的进程），然后看一下local address and foreign address : local -》0.0.0.0:3306能理解就是主机本身ip ,这里不禁抛出一个问题： 为什么是0.0.0.0而不是127.0.0.1？这两者有什么区别？然后是foreign address</p>
+<p><strong>那么翻译这一行的意思就是kernel 正在监听进程号是2231的mysql 服务，在本机ip的3306端口能够接受任何来自于本机外网ip或者内网ip的数据包，同时也能发送到本机的任何一个其他端口的服务，并且现在运行比较良好，没出现什么数据滞留或者发送不出去的大问题</strong></p>
+<p>上面的解释提到了几个字眼：本机ip， 内网ip， 或者外网ip，下篇我会详解一番，这里先进行解读</p>
+<p>再来看一个</p>
+<pre><code>tcp        0      0 127.0.0.1:6379              0.0.0.0:*                   LISTEN      27020/./redis-serve </code></pre><p>相信大家也已经能依葫芦画瓢的翻译👆这个Linux想要传达的网络状态，但我不禁又想抛出一个问题，为什么是监听着回环地址127.0.0.1 这个netip？</p>
+<p>然后再看一个</p>
+<pre><code>tcp        0      0 172.16.166.212:53860        100.100.45.158:80           ESTABLISHED 4542/aliyun_assist_ 
+tcp        0     40 172.16.166.212:22           115.198.98.43:49606         ESTABLISHED 26768/sshd </code></pre><p>先看第二行，翻译出来就是，kernel 正在监听进程号是26768的ssh 服务（一个远程连接的服务），在本机的内网IP=172.16.166.212的netip 的 22 端口上进行收取数据包，并且和外网ip=115.198.98.43 net ip 的 49606端口的服务进行发送数据包，也就是两个服务在通话中，并且sq 有40byte 的数据待从kernel发送出去，可以接受一定程度的缓存数据，在这里又为什么是172.16.166.212 这个IP？内网ip能和一个外网ip进行交流？<br>能的话怎么交流的？！</p>
+<p><strong><em>如果上面提出的场景现象能解释出来，那么说明已经入门“会用网络工程师”，如果上面提出的场景现象的问题能解答出来，那么说明你已经在用创造网络的角度思考问题了，如果还不能思考出来，那看我下一篇吧，我们一起看看原始网络下的真面目</em></strong></p>
+</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/计算机网络/">计算机网络</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/命令/">命令</a></div></article><nav id="pagination"><div class="next-post pull-right"><a href="/2019/06/24/一次redis 的批量导入操作/"><span>一次redis 的批量导入数据记录</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
+<div id="container" style="display:none"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  const myTheme = {
+    render(state, instance) {
+      const container = document.createElement('div');
+      container.lang = "en-US";
+      container.className = 'gitment-container gitment-root-container';
+      container.appendChild(instance.renderHeader(state, instance));
+      container.appendChild(instance.renderEditor(state, instance));
+      container.appendChild(instance.renderComments(state, instance));
+      container.appendChild(instance.renderFooter(state, instance));
+      return container;
+    }
+  }
+
+  function showGitment() {
+    $("#gitment_title").attr("style", "display:none");
+    $("#container").attr("style", "").addClass("gitment_container");
+    var gitment = new Gitment({
+      id: decodeURI(window.location.pathname),
+      theme: myTheme,
+      owner: 'amory',
+      repo: 'amorynan.github.io',
+      oauth: {
+        client_id: '31355da006fcd9f2f1d2',
+        client_secret: 'c81b0a752be3648646e49dcb1278a13abb9d3b6f'
+      }
+    });
+    gitment.render('container');
+  }
+
+  showGitment();
+</script>
+</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
