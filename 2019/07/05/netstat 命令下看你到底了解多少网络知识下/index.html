@@ -1,0 +1,81 @@
+<!DOCTYPE html><html lang="zh"><head><meta name="generator" content="Hexo 3.8.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>netstat 下查看你掌握多少网络知识?中 | WelCome to amory's world!</title><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css"><script>var GLOBAL = { 
+  root: '/',
+  algolia: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script><link rel="icon" href="/favicon.ico"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#netstat-下查看你掌握多少网络知识-中"><span class="toc-number">1.</span> <span class="toc-text">netstat 下查看你掌握多少网络知识?中</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1561376322195&amp;di=968ecdc60b194dac7a024a8e75182703&amp;imgtype=0&amp;src=http%3A%2F%2Fgss0.baidu.com%2F94o3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F91529822720e0cf397cc85d40846f21fbe09aae2.jpg"></div><div class="author-info__name text-center">amory wang</div><div class="author-info__description text-center">hey ...</div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">10</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">15</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">WelCome to amory's world!</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">netstat 下查看你掌握多少网络知识?中</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-07-05 </time></div></div></div><div class="layout" id="content-inner"><article id="post"><div id="post-content"><hr>
+<h2 id="netstat-下查看你掌握多少网络知识-中"><a href="#netstat-下查看你掌握多少网络知识-中" class="headerlink" title="netstat 下查看你掌握多少网络知识?中"></a>netstat 下查看你掌握多少网络知识?中</h2><p>在上篇中我们抛出了几个问题：<br>回顾一下</p>
+<ol>
+<li>为什么linux 上的local address 会有各种的ip呈现？0.0.0.0 or 127.0.0.1 or 172.xx.xx.xx?</li>
+<li>内网ip， 外网ip， 本机ip ？</li>
+<li>local address 显示的内网ip 和 一个foreign address 外网ip可以直接通讯吗？</li>
+</ol>
+<p>解答之前我们先了解几个历史知识：<br> 计算机裸机怎么滴就能上网了呢？答案是网卡，真名是网络适配器or 网络接口卡来实现的，也就是下面这个玩意儿：</p>
+<p> ![我就是网卡本尊]（<a href="https://baike.baidu.com/pic/%E7%BD%91%E5%8D%A1/155684/2544986/d7c9ca3f25bcbda27d1e71ad?fr=lemma&amp;ct=cover#aid=0&amp;pic=b812c8fcc3cec3fda0edf902d288d43f869427f1）" target="_blank" rel="noopener">https://baike.baidu.com/pic/%E7%BD%91%E5%8D%A1/155684/2544986/d7c9ca3f25bcbda27d1e71ad?fr=lemma&amp;ct=cover#aid=0&amp;pic=b812c8fcc3cec3fda0edf902d288d43f869427f1）</a></p>
+<p> 网卡上会有MAC 唯一地址区别计算机，类似于网络层次上本机的身份证id， 同时网卡这就是一个硬件资源啊，当然linux kernel软件是不会放弃这个硬件资源的管理权的，一个网卡驱动就把它管理起来，当然需要遵循以太网的协议，比如MAC 帧大小是标准的以太网数据包大小为1518个字节等，但管理它干啥呢？网卡能做到从物理层（比如什么网线啊，或者无线啊，也就是啥无线电波，微波射频类这些高大的技术实现的网络数据biubiu的传输的）到 MAC 层的数据传送，它就相当于网络和计算机数据传送的桥梁啊，它接受网络上传到它的数据包，放到它本身的储存器，对了，别忘了人家本身是有处理器（ram）和存储器（rom）的，上面那张图也能看出些来吧，所以它价值大不大，linux等着类os 操作系统当然不会放过这个资源，通过自己的网卡驱动器告诉他你接受的数据包放到我所管理的存储器的什么位置将局域网传送过来的数据块存储下来。那么这是软硬件的历史进程，想一个问题，网卡有一个网络的MAC 身份证，如果就靠着这个身份证走天下行得通吗？日本的身份证，中国认不了呢咋办，硬认？！过来旅游一个，中国外交部拿个本本记录，诶下次你来我就认识你了嘿嘿嘿，这种方式效率太低了，况且全球那么多人，也不太现实嘛，其实现实的网络系统也存在这个问题，IANA（Internet Assigned Numbers Authority） 就是整个互联网系统的掌门人，它掌握着全球的IP资源， 但是不会将IP 给每一个网卡或者计算机，不然肯定会枯竭，一个好的方式就是租售给全球大大小小的电信运营商，电信运营商就是互联网系统附属驻扎子掌门人。子掌门人将这些购买来的全球IP，又转租给自己地区的子民们，然后就有标准的ip获得权，同时也分成了几类的超级标准ip（第一个8位是网络号，后面3个八位是主机号）</p>
+<p>A类：1.0.0.0 到 127.255.255.255主要分配 给大量主机而局域网网络数量较少的大型网络</p>
+<p>其中10.0.0.0 到 10.255.255.255为私用地址；</p>
+<p>####100.64.0.0 到 100.64.255.255 为运营商的私有Ip地址；</p>
+<p>127.0.0.0 到127.255.255.255 为系统环回地址</p>
+<p>B类：128.0.0.0 到191.255.255.255 一般用于国际性大公司和政府机构</p>
+<p>其中172.16.0.0 到172.31.255.255为私有地址；</p>
+<p>C类：192.0.0.0 到223.255.255.255 用于一般小公司校园网研究机构等</p>
+<p>其中192.168.0.0 到192.168.255.255为私有地址</p>
+<p>D类：224.0.0.0 到 239.255.255.255 用于特殊用途，又称做广播地址</p>
+<p>E类：240.0.0.0 到255.255.255.255 暂时保留</p>
+<p>然后我们再来看一个问题，运营商们拿到全球的IP 资源，如果按照标准ip的形式网络号+主机号的形式给分配下去，就拿A类的私用地址做例子，每个A类地址可以分配 256^3-2=16777214 个主机为一个广播域，在这个广播域下我们可以直接通信了，但往往子掌门给也有自己的小算盘，它的全球ip也就那么多个，再结合租给别人的ip地址在一个广播域下一半不会有那么多的主机，这不就导致了ip地址段的浪费吗？那么我再加一层自己的ip段，也就是子网，把后面三个8位标准的主机号我再分一层子网的ip，用/xx表示，xx表示此ip前多少位是网络ID，后面便是主机id，在前面相等的情况下就是一个局域网可以自由通讯了</p>
+<p>好了扫盲完成，这些算是基本知识，但是日常更多的场景是直接述说公网ip（外网ip） 和 私有ip （内网ip）这啥意思？ 首先先说明一下IPV4 的ip地址段已经枯竭了，被各种子掌门人掌握在手中了，那么有些运营商比如电信开始使用一个大的局域网作为三级编码的方式改变原来的二级编码的方式， 原来的二级就是上面给一个要租的商家分配一个公网ip，那么1.1.1.1 里面有一个用户主机可以用内网ip表示 10.1.1.1 ，这两级就是二级编码，然后给每个商家分配一个公网有点奢侈的话，有些运营商会用自己独有的ip进行又一个网络的划分，相当于它由原来分发公网IP的性质变成了我掌握一个ip然后分发自己的内网ip，自己有一个大的NAT表，就变成三级编码，一个外网ip：运营商ip：内网ip（当然不是所有的分配都是三级编码，很多公司的ip分配还是二级编码的）</p>
+<p>eg：1.1.1.1:100.64.1.1：10.1.1.1</p>
+<p>然而这样内外网其实就是一个相对的概念，如果物理学的相对论，你在火车上，相对于火车禁止，相对于路面运动，<br>那么你在10.1.1.1 这个地点，就是内网ip，全球ip 1.1.1.1 和 运营商这个100.64.1.1就是外网ip，<br>如果你在100.64.1.1，那么100.64.1.1 就是内网ip，全球1.1.1.1就是外网ip， 那10.1.1.1呢？人家看不到这个IP啊，所以不适用的，一个字丢，那么如果你是在全球ip的视角，那就都是全球ip的访问，如果有看到来自私有地址的ip包，咱不认识啊，丢啊，所以强调的是内外网的一个相对概念和前面ip地址段的绝对概念，一起理解会有很好的效果呢.</p>
+<p>然后我们在解决上面的几个问题：</p>
+<ol>
+<li><p>linux 对于ip的展示其实有根据通讯双方或者服务来依据的，上文中监听mysql 服务的双方是           </p>
+<pre><code>tcp   0    0 0.0.0.0:3306                0.0.0.0:*                   LISTEN      2231/mysqld  </code></pre><p> ####其实是可以理解是mysql服务是需要对本机上所有的ip地址的3306的端口进行监听，也就是说本机本来是可以绑定多个ip，可以有多个网卡，或者多个ip，那么mysql服务要求这台机子所有的ip的此端口都是通向mysql服务的，同时也跟其他任意ip服务进行通讯，设置这个就可以说此服务的访问就可以通过主机的多个 ip 地址到。<br> 那么127.0.0.1 又是什么呢？就是IP地址一个特殊地址段嘛，只能允许自己访问自己，也就是最多到网卡就又发回来了</p>
+</li>
+<li><p>内外网ip 上面也解释过了，就是一个相对的概念</p>
+<pre><code>tcp        0      0 172.16.166.212:53860        100.100.45.158:80           ESTABLISHED 4542/aliyun_assist_ 
+tcp        0     40 172.16.166.212:22           115.198.98.43:49606         ESTABLISHED 26768/sshd </code></pre><p>####类似这两个连接，localaddress 是一个内网ip， 通信的对方的是一个外网的ip，也就是说此端口服务在本机的这个内网ip进行监听，和对方建立通讯连接，地址也只能是外网ip，人家内网ip咱也无从知晓啊</p>
+</li>
+</ol>
+<p>关于netstat还有 后面的状态栏，这又是关于Linux对于网络协议栈的知识体了，我们下回再解读。。。</p>
+</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/计算机网络/">计算机网络</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/命令/">命令</a></div></article><nav id="pagination"><div class="next-post pull-right"><a href="/2019/07/03/netstat 下的你了解多少？上/"><span>netstat 下查看你掌握多少网络知识?上</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
+<div id="container" style="display:none"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  const myTheme = {
+    render(state, instance) {
+      const container = document.createElement('div');
+      container.lang = "en-US";
+      container.className = 'gitment-container gitment-root-container';
+      container.appendChild(instance.renderHeader(state, instance));
+      container.appendChild(instance.renderEditor(state, instance));
+      container.appendChild(instance.renderComments(state, instance));
+      container.appendChild(instance.renderFooter(state, instance));
+      return container;
+    }
+  }
+
+  function showGitment() {
+    $("#gitment_title").attr("style", "display:none");
+    $("#container").attr("style", "").addClass("gitment_container");
+    var gitment = new Gitment({
+      id: decodeURI(window.location.pathname),
+      theme: myTheme,
+      owner: 'amory',
+      repo: 'amorynan.github.io',
+      oauth: {
+        client_id: '31355da006fcd9f2f1d2',
+        client_secret: 'c81b0a752be3648646e49dcb1278a13abb9d3b6f'
+      }
+    });
+    gitment.render('container');
+  }
+
+  showGitment();
+</script>
+</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
