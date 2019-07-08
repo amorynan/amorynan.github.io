@@ -14,8 +14,8 @@
 <p><strong><em>那么有哪些编码机制可以让coder 用呢？</em></strong><br>可见性的问题： 可以通过volatile 的语义， final or sychronized 关键字保证可见性，volatile 可以让工作内存中的变量刷新到主内存中去，也有人说是jvm 编译的时候直接跳过缓存，更新主内存一说，那我们先从内存模型中看一下java中支持的原子性和volatile 支持的哪些操作<br><img src="https://upload-images.jianshu.io/upload_images/13145731-6343a690b6c63a27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="java内存模型中支持的原子性指令"></p>
 </div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/并发编程/">并发编程</a><a class="post-meta__tags" href="/tags/java/">java</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/23/并发编程一/"><i class="fa fa-chevron-left">  </i><span>并发编程领域的探索和实践之路</span></a></div><div class="next-post pull-right"><a href="/2019/06/23/计算机系统知识1/"><span>抛一些有助于形成计算机知识图谱的图</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
 <div id="container" style="display:none"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+<script src="https://jjeejj.github.io/js/gitment.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
   const myTheme = {
@@ -38,10 +38,10 @@
       id: decodeURI(window.location.pathname),
       theme: myTheme,
       owner: 'amory',
-      repo: 'amorynan.github.io',
+      repo: 'https://github.com/amorynan/amorynan.github.io.git',
       oauth: {
-        client_id: '31355da006fcd9f2f1d2',
-        client_secret: 'c81b0a752be3648646e49dcb1278a13abb9d3b6f'
+        client_id: 'baa58bb278f2ebfa4b3e',
+        client_secret: 'e3e57fa2e837dbfa516a480a6ddd78b9617bc91c'
       }
     });
     gitment.render('container');

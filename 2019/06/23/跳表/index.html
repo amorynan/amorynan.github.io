@@ -28,8 +28,8 @@
 <p>上面的操作需要几点注意的地方，不然就要NPE 的错误，在任何直接有判断xxxNode.next[i].xxx 的语句情况下都要判断xxxNode.next[i] assert null ? 的操作，这个算是链表的常见错误，其次是最后的level 的判断是否要减少<br>完整的可以见我的github 账号<a href="https://github.com/amorynan/study" target="_blank" rel="noopener">https://github.com/amorynan/study</a><br> 欢迎留言<br>最后再来看一下空间复杂度的情况，不能只看好处不看坏处嘛，空间复杂度当然是随着时间复杂度的下降而上升的，所以当你的随机函数调节的高度接近二叉的的话，那么可以依次算出第一层索引需要n/2 个nodes，第二层索引需要n/4 个nodes ，一直到最后一层以2的倍数递减，所以总的空间复杂度就是n，如果是接近三叉的话，那总的空间复杂度就是n/2 ，其实这个值是直接和递减的倍数相关的，有兴趣的可以推导一下.</p>
 </div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/跳表/">跳表</a><a class="post-meta__tags" href="/tags/算法/">算法</a><a class="post-meta__tags" href="/tags/数据结构/">数据结构</a><a class="post-meta__tags" href="/tags/skipLinkedList/">skipLinkedList</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/23/数组linkedlist实现/"><i class="fa fa-chevron-left">  </i><span>数组和链表+以及java 容器的实现</span></a></div><div class="next-post pull-right"><a href="/2019/05/30/my-first-blog-test/"><span>my first blog test</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
 <div id="container" style="display:none"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+<script src="https://jjeejj.github.io/js/gitment.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
   const myTheme = {
@@ -52,10 +52,10 @@
       id: decodeURI(window.location.pathname),
       theme: myTheme,
       owner: 'amory',
-      repo: 'amorynan.github.io',
+      repo: 'https://github.com/amorynan/amorynan.github.io.git',
       oauth: {
-        client_id: '31355da006fcd9f2f1d2',
-        client_secret: 'c81b0a752be3648646e49dcb1278a13abb9d3b6f'
+        client_id: 'baa58bb278f2ebfa4b3e',
+        client_secret: 'e3e57fa2e837dbfa516a480a6ddd78b9617bc91c'
       }
     });
     gitment.render('container');

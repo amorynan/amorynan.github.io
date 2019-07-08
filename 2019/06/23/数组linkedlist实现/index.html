@@ -32,8 +32,8 @@
 <p>no volatile 的修饰，无法保证可见性，其次checkForComodification() 在cpu层面上并不是原子性的，同时也没有加锁保证互斥<br><strong>链表和数组到底用哪个？</strong><br>首先从硬件资源角度分析，数组cpu缓存友好，可以通过cpu预读操作达到一定的性能提升，但是注意场景，单线程情况下才不会出现数据的错误，并且对内存友好，通过寻址方式找到，在同一块区域内，内存碎片少，链表以上优点都没有，并且第二个可以成为缺点，由于存储地方的不确定性，可能会造成内存碎片，对于java ，可能会有gc 频繁的弊端，但是从功能性上分析，链表天然支持动态“无限”扩容，而数组不支持，有预先分配的大小，即便是java 封装的容器可以做到不考虑这些，也是有一层复制再扩容成1.5倍大小的额外时间复杂度的，所以如果是删除和插入非常频繁并且无法预估数据量大小的，可以选择链表，但是链表的方法时间复杂度综合与数组是没有它好的，数组的随机访问时间复杂度的绝对性优势压倒链表<br>但还是具体情况具体使用分析<br><strong>思考，用数组和链表分别实现LRU 缓存淘汰算法</strong></p>
 </div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/数据结构基础篇/">数据结构基础篇</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/23/计算机系统知识1/"><i class="fa fa-chevron-left">  </i><span>抛一些有助于形成计算机知识图谱的图</span></a></div><div class="next-post pull-right"><a href="/2019/06/23/跳表/"><span>跳表一二事</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
 <div id="container" style="display:none"></div>
-<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
+<script src="https://jjeejj.github.io/js/gitment.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script>
   const myTheme = {
@@ -56,10 +56,10 @@
       id: decodeURI(window.location.pathname),
       theme: myTheme,
       owner: 'amory',
-      repo: 'amorynan.github.io',
+      repo: 'https://github.com/amorynan/amorynan.github.io.git',
       oauth: {
-        client_id: '31355da006fcd9f2f1d2',
-        client_secret: 'c81b0a752be3648646e49dcb1278a13abb9d3b6f'
+        client_id: 'baa58bb278f2ebfa4b3e',
+        client_secret: 'e3e57fa2e837dbfa516a480a6ddd78b9617bc91c'
       }
     });
     gitment.render('container');
