@@ -30,40 +30,41 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">private class ListItr implements ListIterator&lt;E&gt; &#123;                          </span><br><span class="line">    private Node&lt;E&gt; lastReturned;                                           </span><br><span class="line">    private Node&lt;E&gt; next;                                                   </span><br><span class="line">    private int nextIndex;                                                  </span><br><span class="line">    private int expectedModCount = modCount;              </span><br><span class="line"></span><br><span class="line">       final void checkForComodification() &#123;                              </span><br><span class="line">           if (modCount != expectedModCount)                              </span><br><span class="line">               throw new ConcurrentModificationException();               </span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
 
 <p>no volatile 的修饰，无法保证可见性，其次checkForComodification() 在cpu层面上并不是原子性的，同时也没有加锁保证互斥<br><strong>链表和数组到底用哪个？</strong><br>首先从硬件资源角度分析，数组cpu缓存友好，可以通过cpu预读操作达到一定的性能提升，但是注意场景，单线程情况下才不会出现数据的错误，并且对内存友好，通过寻址方式找到，在同一块区域内，内存碎片少，链表以上优点都没有，并且第二个可以成为缺点，由于存储地方的不确定性，可能会造成内存碎片，对于java ，可能会有gc 频繁的弊端，但是从功能性上分析，链表天然支持动态“无限”扩容，而数组不支持，有预先分配的大小，即便是java 封装的容器可以做到不考虑这些，也是有一层复制再扩容成1.5倍大小的额外时间复杂度的，所以如果是删除和插入非常频繁并且无法预估数据量大小的，可以选择链表，但是链表的方法时间复杂度综合与数组是没有它好的，数组的随机访问时间复杂度的绝对性优势压倒链表<br>但还是具体情况具体使用分析<br><strong>思考，用数组和链表分别实现LRU 缓存淘汰算法</strong></p>
-</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/数据结构基础篇/">数据结构基础篇</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/23/计算机系统知识1/"><i class="fa fa-chevron-left">  </i><span>抛一些有助于形成计算机知识图谱的图</span></a></div><div class="next-post pull-right"><a href="/2019/06/23/跳表/"><span>跳表一二事</span><i class="fa fa-chevron-right"></i></a></div></nav>{% if theme.gitment.enable %}
-     {% set owner = theme.gitment.githubID %}
-     {% set repo = theme.gitment.repo %}
-     {% set cid = theme.gitment.ClientID %}
-     {% set cs = theme.gitment.ClientSecret %}
-     <link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
-     <script src="https://www.wenjunjiang.win/js/gitment.js"></script>
-     {% if not theme.gitment.lazy %}
-         <script type="text/javascript">
-             var gitment = new Gitment({
-                 id: document.location.href, 
-                 owner: '{{owner}}',
-                 repo: '{{repo}}',
-                 oauth: {
-                     client_id: '{{cid}}',
-                     client_secret: '{{cs}}'
-                 }});
-             gitment.render('gitment-container');
-         </script>
-     {% else %}
-         <script type="text/javascript">
-             function ShowGitment(){
-                 document.getElementById("gitment-display-button").style.display = "none";
-                 document.getElementById("gitment-container").style.display = "block";
-                 var gitment = new Gitment({
-                     id: document.location.href, 
-                     owner: '{{owner}}',
-                     repo: '{{repo}}',
-                     oauth: {
-                         client_id: '{{cid}}',
-                         client_secret: '{{cs}}',
-                     }});
-                 gitment.render('gitment-container');
-             }
-         </script>
-     {% endif %}
- {% endif %}</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
+</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/java/">java</a><a class="post-meta__tags" href="/tags/数据结构基础篇/">数据结构基础篇</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/06/23/计算机系统知识1/"><i class="fa fa-chevron-left">  </i><span>抛一些有助于形成计算机知识图谱的图</span></a></div><div class="next-post pull-right"><a href="/2019/06/23/跳表/"><span>跳表一二事</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
+<div id="container" style="display:none"></div>
+<link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
+<script src="https://www.wenjunjiang.win/js/gitment.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  const myTheme = {
+    render(state, instance) {
+      const container = document.createElement('div');
+      container.lang = "en-US";
+      container.className = 'gitment-container gitment-root-container';
+      container.appendChild(instance.renderHeader(state, instance));
+      container.appendChild(instance.renderEditor(state, instance));
+      container.appendChild(instance.renderComments(state, instance));
+      container.appendChild(instance.renderFooter(state, instance));
+      return container;
+    }
+  }
+
+  function showGitment() {
+    $("#gitment_title").attr("style", "display:none");
+    $("#container").attr("style", "").addClass("gitment_container");
+    var gitment = new Gitment({
+      id: decodeURI(window.location.pathname),
+      theme: myTheme,
+      owner: 'amorynan',
+      repo: 'https://amorynan.github.io/',
+      oauth: {
+        client_id: 'dd00b7cc5fbce0060c2d',
+        client_secret: '9e044107808ba825bdf0990c19c4501de74bdcec'
+      }
+    });
+    gitment.render('container');
+  }
+
+  showGitment();
+</script>
+</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>

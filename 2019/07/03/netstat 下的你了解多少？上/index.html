@@ -41,40 +41,41 @@ tcp        0     40 172.16.166.212:22           115.198.98.43:49606         ESTA
 <pre><code>tcp        0      0 172.16.166.212:53860        100.100.45.158:80           ESTABLISHED 4542/aliyun_assist_ 
 tcp        0     40 172.16.166.212:22           115.198.98.43:49606         ESTABLISHED 26768/sshd </code></pre><p>先看第二行，翻译出来就是，kernel 正在监听进程号是26768的ssh 服务（一个远程连接的服务），在本机的内网IP=172.16.166.212的netip 的 22 端口上进行收取数据包，并且和外网ip=115.198.98.43 net ip 的 49606端口的服务进行发送数据包，也就是两个服务在通话中，并且sq 有40byte 的数据待从kernel发送出去，可以接受一定程度的缓存数据，在这里又为什么是172.16.166.212 这个IP？内网ip能和一个外网ip进行交流？<br>能的话怎么交流的？！</p>
 <p><strong><em>如果上面提出的场景现象能解释出来，那么说明已经入门“会用网络工程师”，如果上面提出的场景现象的问题能解答出来，那么说明你已经在用创造网络的角度思考问题了，如果还不能思考出来，那看我下一篇吧，我们一起看看原始网络下的真面目</em></strong></p>
-</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/计算机网络/">计算机网络</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/命令/">命令</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/07/05/netstat 命令下看你到底了解多少网络知识下/"><i class="fa fa-chevron-left">  </i><span>netstat 下查看你掌握多少网络知识?中</span></a></div><div class="next-post pull-right"><a href="/2019/06/24/一次redis 的批量导入操作/"><span>一次redis 的批量导入数据记录</span><i class="fa fa-chevron-right"></i></a></div></nav>{% if theme.gitment.enable %}
-     {% set owner = theme.gitment.githubID %}
-     {% set repo = theme.gitment.repo %}
-     {% set cid = theme.gitment.ClientID %}
-     {% set cs = theme.gitment.ClientSecret %}
-     <link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
-     <script src="https://www.wenjunjiang.win/js/gitment.js"></script>
-     {% if not theme.gitment.lazy %}
-         <script type="text/javascript">
-             var gitment = new Gitment({
-                 id: document.location.href, 
-                 owner: '{{owner}}',
-                 repo: '{{repo}}',
-                 oauth: {
-                     client_id: '{{cid}}',
-                     client_secret: '{{cs}}'
-                 }});
-             gitment.render('gitment-container');
-         </script>
-     {% else %}
-         <script type="text/javascript">
-             function ShowGitment(){
-                 document.getElementById("gitment-display-button").style.display = "none";
-                 document.getElementById("gitment-container").style.display = "block";
-                 var gitment = new Gitment({
-                     id: document.location.href, 
-                     owner: '{{owner}}',
-                     repo: '{{repo}}',
-                     oauth: {
-                         client_id: '{{cid}}',
-                         client_secret: '{{cs}}',
-                     }});
-                 gitment.render('gitment-container');
-             }
-         </script>
-     {% endif %}
- {% endif %}</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
+</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/计算机网络/">计算机网络</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/命令/">命令</a></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/07/05/netstat 命令下看你到底了解多少网络知识下/"><i class="fa fa-chevron-left">  </i><span>netstat 下查看你掌握多少网络知识?中</span></a></div><div class="next-post pull-right"><a href="/2019/06/24/一次redis 的批量导入操作/"><span>一次redis 的批量导入数据记录</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
+<div id="container" style="display:none"></div>
+<link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
+<script src="https://www.wenjunjiang.win/js/gitment.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  const myTheme = {
+    render(state, instance) {
+      const container = document.createElement('div');
+      container.lang = "en-US";
+      container.className = 'gitment-container gitment-root-container';
+      container.appendChild(instance.renderHeader(state, instance));
+      container.appendChild(instance.renderEditor(state, instance));
+      container.appendChild(instance.renderComments(state, instance));
+      container.appendChild(instance.renderFooter(state, instance));
+      return container;
+    }
+  }
+
+  function showGitment() {
+    $("#gitment_title").attr("style", "display:none");
+    $("#container").attr("style", "").addClass("gitment_container");
+    var gitment = new Gitment({
+      id: decodeURI(window.location.pathname),
+      theme: myTheme,
+      owner: 'amorynan',
+      repo: 'https://amorynan.github.io/',
+      oauth: {
+        client_id: 'dd00b7cc5fbce0060c2d',
+        client_secret: '9e044107808ba825bdf0990c19c4501de74bdcec'
+      }
+    });
+    gitment.render('container');
+  }
+
+  showGitment();
+</script>
+</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>

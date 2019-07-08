@@ -41,40 +41,41 @@ tcp        0     40 172.16.166.212:22           115.198.98.43:49606         ESTA
 </li>
 </ol>
 <p>关于netstat还有 后面的状态栏，这又是关于Linux对于网络协议栈的知识体了，我们下回再解读。。。</p>
-</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/计算机网络/">计算机网络</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/命令/">命令</a></div></article><nav id="pagination"><div class="next-post pull-right"><a href="/2019/07/03/netstat 下的你了解多少？上/"><span>netstat 下查看你掌握多少网络知识?上</span><i class="fa fa-chevron-right"></i></a></div></nav>{% if theme.gitment.enable %}
-     {% set owner = theme.gitment.githubID %}
-     {% set repo = theme.gitment.repo %}
-     {% set cid = theme.gitment.ClientID %}
-     {% set cs = theme.gitment.ClientSecret %}
-     <link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
-     <script src="https://www.wenjunjiang.win/js/gitment.js"></script>
-     {% if not theme.gitment.lazy %}
-         <script type="text/javascript">
-             var gitment = new Gitment({
-                 id: document.location.href, 
-                 owner: '{{owner}}',
-                 repo: '{{repo}}',
-                 oauth: {
-                     client_id: '{{cid}}',
-                     client_secret: '{{cs}}'
-                 }});
-             gitment.render('gitment-container');
-         </script>
-     {% else %}
-         <script type="text/javascript">
-             function ShowGitment(){
-                 document.getElementById("gitment-display-button").style.display = "none";
-                 document.getElementById("gitment-container").style.display = "block";
-                 var gitment = new Gitment({
-                     id: document.location.href, 
-                     owner: '{{owner}}',
-                     repo: '{{repo}}',
-                     oauth: {
-                         client_id: '{{cid}}',
-                         client_secret: '{{cs}}',
-                     }});
-                 gitment.render('gitment-container');
-             }
-         </script>
-     {% endif %}
- {% endif %}</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
+</div><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/计算机网络/">计算机网络</a><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/命令/">命令</a></div></article><nav id="pagination"><div class="next-post pull-right"><a href="/2019/07/03/netstat 下的你了解多少？上/"><span>netstat 下查看你掌握多少网络知识?上</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="gitment_title" class="gitment_title"></div>
+<div id="container" style="display:none"></div>
+<link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
+<script src="https://www.wenjunjiang.win/js/gitment.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+  const myTheme = {
+    render(state, instance) {
+      const container = document.createElement('div');
+      container.lang = "en-US";
+      container.className = 'gitment-container gitment-root-container';
+      container.appendChild(instance.renderHeader(state, instance));
+      container.appendChild(instance.renderEditor(state, instance));
+      container.appendChild(instance.renderComments(state, instance));
+      container.appendChild(instance.renderFooter(state, instance));
+      return container;
+    }
+  }
+
+  function showGitment() {
+    $("#gitment_title").attr("style", "display:none");
+    $("#container").attr("style", "").addClass("gitment_container");
+    var gitment = new Gitment({
+      id: decodeURI(window.location.pathname),
+      theme: myTheme,
+      owner: 'amorynan',
+      repo: 'https://amorynan.github.io/',
+      oauth: {
+        client_id: 'dd00b7cc5fbce0060c2d',
+        client_secret: '9e044107808ba825bdf0990c19c4501de74bdcec'
+      }
+    });
+    gitment.render('container');
+  }
+
+  showGitment();
+</script>
+</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
