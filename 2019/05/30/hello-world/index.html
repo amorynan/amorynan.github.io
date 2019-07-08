@@ -19,41 +19,40 @@
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-</div><div class="post-meta__tag-list"></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/05/30/my-first-blog-test/"><i class="fa fa-chevron-left">  </i><span>my first blog test</span></a></div></nav><div id="gitment_title" class="gitment_title"></div>
-<div id="container" style="display:none"></div>
-<link rel="stylesheet" href="https://jjeejj.github.io/css/gitment.css">
-<script src="https://jjeejj.github.io/js/gitment.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-<script>
-  const myTheme = {
-    render(state, instance) {
-      const container = document.createElement('div');
-      container.lang = "en-US";
-      container.className = 'gitment-container gitment-root-container';
-      container.appendChild(instance.renderHeader(state, instance));
-      container.appendChild(instance.renderEditor(state, instance));
-      container.appendChild(instance.renderComments(state, instance));
-      container.appendChild(instance.renderFooter(state, instance));
-      return container;
-    }
-  }
-
-  function showGitment() {
-    $("#gitment_title").attr("style", "display:none");
-    $("#container").attr("style", "").addClass("gitment_container");
-    var gitment = new Gitment({
-      id: decodeURI(window.location.pathname),
-      theme: myTheme,
-      owner: 'amorynan',
-      repo: 'https://amorynan.github.io/',
-      oauth: {
-        client_id: 'dd00b7cc5fbce0060c2d',
-        client_secret: '9e044107808ba825bdf0990c19c4501de74bdcec'
-      }
-    });
-    gitment.render('container');
-  }
-
-  showGitment();
-</script>
-</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
+</div><div class="post-meta__tag-list"></div></article><nav id="pagination"><div class="prev-post pull-left"><a href="/2019/05/30/my-first-blog-test/"><i class="fa fa-chevron-left">  </i><span>my first blog test</span></a></div></nav>{% if theme.gitment.enable %}
+     {% set owner = theme.gitment.githubID %}
+     {% set repo = theme.gitment.repo %}
+     {% set cid = theme.gitment.ClientID %}
+     {% set cs = theme.gitment.ClientSecret %}
+     <link rel="stylesheet" href="https://www.wenjunjiang.win/css/gitment.css">
+     <script src="https://www.wenjunjiang.win/js/gitment.js"></script>
+     {% if not theme.gitment.lazy %}
+         <script type="text/javascript">
+             var gitment = new Gitment({
+                 id: document.location.href, 
+                 owner: '{{owner}}',
+                 repo: '{{repo}}',
+                 oauth: {
+                     client_id: '{{cid}}',
+                     client_secret: '{{cs}}'
+                 }});
+             gitment.render('gitment-container');
+         </script>
+     {% else %}
+         <script type="text/javascript">
+             function ShowGitment(){
+                 document.getElementById("gitment-display-button").style.display = "none";
+                 document.getElementById("gitment-container").style.display = "block";
+                 var gitment = new Gitment({
+                     id: document.location.href, 
+                     owner: '{{owner}}',
+                     repo: '{{repo}}',
+                     oauth: {
+                         client_id: '{{cid}}',
+                         client_secret: '{{cs}}',
+                     }});
+                 gitment.render('gitment-container');
+             }
+         </script>
+     {% endif %}
+ {% endif %}</div></div><footer><div class="layout" id="footer"><div class="copyright">©2013 - 2019 By amory wang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span> |  </span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="/js/third-party/anime.min.js"></script><script src="/js/third-party/jquery.min.js"></script><script src="/js/third-party/jquery.fancybox.min.js"></script><script src="/js/third-party/velocity.min.js"></script><script src="/js/third-party/velocity.ui.min.js"></script><script src="/js/utils.js"></script><script src="/js/fancybox.js"></script><script src="/js/sidebar.js"></script><script src="/js/copy.js"></script><script src="/js/fireworks.js"></script><script src="/js/transition.js"></script><script src="/js/scroll.js"></script><script src="/js/head.js"></script></body></html>
